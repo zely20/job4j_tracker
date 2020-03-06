@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.Random;
+
 public class Tracker {
     /**
      * Массив для хранения заявок.
@@ -27,7 +29,7 @@ public class Tracker {
      * @return Уникальный ключ.
      */
     private String generateId() {
-        //Реализовать метод генерации.
-        return null;
+        Random rm = new Random();
+        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
     }
 }
