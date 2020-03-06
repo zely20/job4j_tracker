@@ -7,7 +7,6 @@ public class Tracker {
      * Массив для хранения заявок.
      */
     private final Item[] items = new Item[100];
-
     /**
      * Указатель ячейки для новой заявки.
      */
