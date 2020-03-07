@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Tracker {
@@ -21,9 +22,6 @@ public class Tracker {
         items[position++] = item;
         return item;
     }
-
-
-
     /**
      * Метод генерирует уникальный ключ для заявки.
      * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
@@ -32,5 +30,36 @@ public class Tracker {
     private String generateId() {
         Random rm = new Random();
         return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+    }
+    /**
+     * Метод возвращает все элементы массива без пустых(null) ячеек
+     * @return массив Item
+     */
+    public Item[] findAll() {
+        Item[] itemsWithoutNull = new Item[position];
+        int size = 0;
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null) {
+                itemsWithoutNull[size] = items[i];
+                size++;
+            }
+        }
+        itemsWithoutNull = Arrays.copyOf(itemsWithoutNull,size);
+        return itemsWithoutNull;
+    }
+    /**
+     * Метод возвращает массив Item c элементоми в которых поле name равное принимаемому параметру String key
+     * @return массив Item
+     */
+    public Item[] findByName(String key) {
+        Item[] itemsByName = new Item[position];
+        int size = 0;
+        for (int i = 0; i < items.length; i++) {
+            if(items[i] != null && items[i].getName().equals(key)) {
+                itemsByName[size] = items[i];
+             }
+        }
+        itemsByName = Arrays.copyOf(itemsByName, size);
+        return itemsByName;
     }
 }
