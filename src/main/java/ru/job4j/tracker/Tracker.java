@@ -57,9 +57,20 @@ public class Tracker {
         for (int i = 0; i < items.length; i++) {
             if(items[i] != null && items[i].getName().equals(key)) {
                 itemsByName[size] = items[i];
+                size++;
              }
         }
         itemsByName = Arrays.copyOf(itemsByName, size);
         return itemsByName;
+    }
+
+    public Item findById(String key) {
+
+        for (int i = 0; i < items.length; i++) {
+            if(items[i] != null && items[i].getId().equals(key)) {
+                return items[i];
+            }
+        }
+        return null;
     }
 }
