@@ -101,7 +101,6 @@ public class Tracker {
     public boolean delete(String id) {
         if(this.findById(id) != null) {
             int index = indexOf(id);
-            //items[index] = null;
             System.arraycopy(items, index + 1, items, index, position - index);
             items[position - 1] = null;
             position--;
