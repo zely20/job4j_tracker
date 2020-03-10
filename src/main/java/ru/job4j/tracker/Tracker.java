@@ -79,8 +79,8 @@ public class Tracker {
     }
 
     public boolean replace(String id, Item item) {
-        if (items[indexOf(id)] != null) {
-            int index = indexOf(id);
+        int index = indexOf(id);
+        if (items[index] != null) {
             items[index].setName(item.getName());
             return true;
         }
