@@ -41,15 +41,8 @@ public class Tracker {
      * @return массив Item
      */
     public Item[] findAll() {
-        Item[] itemsWithoutNull = new Item[position];
-        int size = 0;
-        for (int i = 0; i < position; i++) {
-            if (items[i] != null) {
-                itemsWithoutNull[size] = items[i];
-                size++;
-            }
-        }
-        itemsWithoutNull = Arrays.copyOf(itemsWithoutNull, size);
+       Item[] itemsWithoutNull = items;
+        itemsWithoutNull = Arrays.copyOf(itemsWithoutNull, position);
         return itemsWithoutNull;
     }
 
@@ -59,10 +52,10 @@ public class Tracker {
      * @return массив Item
      */
     public Item[] findByName(String key) {
-        Item[] itemsByName = new Item[position];
+        Item[] itemsByName = items;
         int size = 0;
         for (int i = 0; i < position; i++) {
-            if (items[i] != null && items[i].getName().equals(key)) {
+            if (items[i].getName().equals(key)) {
                 itemsByName[size] = items[i];
                 size++;
             }
