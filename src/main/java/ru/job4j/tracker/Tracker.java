@@ -73,7 +73,7 @@ public class Tracker {
 
     public boolean replace(String id, Item item) {
         int index = indexOf(id);
-        if (items[index] != null) {
+        if (index != -1) {
             items[index].setName(item.getName());
             return true;
         }
@@ -92,8 +92,8 @@ public class Tracker {
     }
 
     public boolean delete(String id) {
-        if(this.findById(id) != null) {
-            int index = indexOf(id);
+        int index = indexOf(id);
+        if(index != -1) {
             System.arraycopy(items, index + 1, items, index, position - index);
             items[position - 1] = null;
             position--;
