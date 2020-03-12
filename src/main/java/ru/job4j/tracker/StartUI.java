@@ -19,16 +19,21 @@ public class StartUI {
             } else if (select == 1) {
                 System.out.println("Show all items");
                 for (Item item : tracker.findAll()) {
-                    System.out.println("Item name is " + item.getName() + " item id is " + item.getId());
+                    System.out.println(item);
                 }
             } else if (select == 2) {
                 System.out.println("Edit item");
                 System.out.println("Please enter id");
                 String id = scanner.nextLine();
-                System.out.print("Enter name: ");
-                String name = scanner.nextLine();
-                Item item = new Item(name);
-                tracker.replace(id, item);
+                if (tracker.findById(id) != null) {
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    Item item = new Item(name);
+                    tracker.replace(id, item);
+                    System.out.println("Item is changed");
+                } else {
+                    System.out.println("Wrong id " + id);
+                }
             } else if (select == 3) {
                 System.out.println("For delete item please enter ID ");
                 String id = scanner.nextLine();
@@ -52,7 +57,7 @@ public class StartUI {
                 System.out.println("Please enter name ");
                 String name = scanner.nextLine();
                 for (Item item: tracker.findByName(name)) {
-                    System.out.println("Name " + item.getName() + " id " + item.getId());
+                    System.out.println(item);
                 }
             } else if (select == 6) {
                 run = false;
