@@ -65,16 +65,17 @@ public class Tracker {
     }
 
     public Item findById(String id) {
-        // Находим индекс
         int index = indexOf(id);
-        // Если индекс найден возвращаем item, иначе null
+
         return index != -1 ? items[index] : null;
     }
 
     public boolean replace(String id, Item item) {
         int index = indexOf(id);
         if (index != -1) {
-            items[index].setName(item.getName());
+            String lostId = items[index].getId();
+            item.setId(lostId);
+            items[index] = item;
             return true;
         }
         return false;
