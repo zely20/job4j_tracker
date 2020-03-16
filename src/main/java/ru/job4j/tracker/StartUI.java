@@ -18,13 +18,11 @@ public class StartUI {
 
     public static void editItem(Input input, Tracker tracker) {
         System.out.println("Edit item");
-        String id = input.askStr("Please enter id");
-        if (tracker.findById(id) != null) {
-            System.out.print("Enter name: ");
-            String name = input.askStr("Enter name: ");
-            Item item = new Item(name);
-            tracker.replace(id, item);
-            System.out.println("Item is changed");
+        String id = input.askStr("Please enter id ");
+        String name = input.askStr("Enter name: ");
+        Item item = new Item(name);
+        if (tracker.replace(id, item)) {
+            System.out.println("Item changed");
         } else {
             System.out.println("Wrong id " + id);
         }
