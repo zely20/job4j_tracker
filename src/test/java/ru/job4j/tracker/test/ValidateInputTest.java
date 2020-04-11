@@ -17,7 +17,7 @@ public class ValidateInputTest {
         PrintStream out = System.out;
         System.setOut(new PrintStream(mem));
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"one", "1"})
+                new StubInput(new String[] {" ", "1"})
         );
         input.askInt("Enter",5);
         assertThat(
@@ -33,9 +33,9 @@ public class ValidateInputTest {
         PrintStream out = System.out;
         System.setOut(new PrintStream(mem));
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"10"})
+                new StubInput(new String[] {"15","1"})
         );
-        input.askInt("Enter", 5);
+        input.askInt("Enter", 2);
         assertThat(
                 mem.toString(),
                 is(String.format("Please select key from menu.%n"))
