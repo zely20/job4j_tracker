@@ -10,8 +10,8 @@ public class EditItemAction implements UserAction {
     public boolean execute(Input input, Tracker tracker) {
         String id = input.askStr("Please enter id ");
         String name = input.askStr("Enter name: ");
-        Item item = new Item(name);
-        if (tracker.replace(id, item)) {
+        Item item = new Item(id, name);
+        if (tracker.replace(item)) {
             System.out.println("Item replaced");
         } else {
             System.out.println("Item was not replace");
