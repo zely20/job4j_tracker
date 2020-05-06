@@ -9,6 +9,7 @@ public class Tracker {
      * Массив для хранения заявок.
      */
     private final List<Item> items = new ArrayList<>();
+
     /**
      * Метод добавления заявки в хранилище
      *
@@ -39,6 +40,7 @@ public class Tracker {
     public List<Item> findAll() {
         return items;
     }
+
     /**
      * Метод возвращает массив Item c элементоми в которых поле name равное принимаемому параметру String key
      *
@@ -55,10 +57,9 @@ public class Tracker {
     }
 
     public Item findById(String id) {
-        for (Item item : items) {
-            if (item.getId().equals(id)) {
-                return item;
-            }
+        int i = indexOf(id);
+        if (i >= 0) {
+            return items.get(i);
         }
         return null;
     }
@@ -73,12 +74,20 @@ public class Tracker {
     }
 
     public boolean delete(String id) {
-        for (int i = 0; i < items.size(); i++){
-            if(items.get(i).getId().equals(id)) {
-                items.remove(i);
-                return true;
-            }
+        int i = indexOf(id);
+        if (i >= 0) {
+            items.remove(i);
+            return true;
         }
         return false;
+    }
+
+    public int indexOf(String id) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
