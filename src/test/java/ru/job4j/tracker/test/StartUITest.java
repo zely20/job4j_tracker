@@ -7,6 +7,8 @@ import ru.job4j.tracker.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
@@ -33,7 +35,10 @@ public class StartUITest {
                 new String[] {"1"}
         );
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[] { action, action});
+        List<UserAction> actions = new ArrayList<>();
+        actions.add(action);
+        actions.add(action);
+        new StartUI().init(input, new Tracker(), actions);
         assertThat(action.isCall(), is(true));
     }
 
@@ -43,10 +48,11 @@ public class StartUITest {
                 new String[] {"0"}
         );
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[] { action });
+        List<UserAction> actions = new ArrayList<>();
+        actions.add(action);
+        new StartUI().init(input, new Tracker(), actions);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("Menu.")
-                .add("0. Stub action")
+                .add("Stub action")
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
     }
