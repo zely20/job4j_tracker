@@ -9,20 +9,13 @@ public class StartUI {
     public void init(Input input, Tracker tracker, List<UserAction> actions) {
         boolean run = true;
         while (run) {
-            //this.showMenu(actions);
+
             actions.forEach(action -> System.out.println(action.name()));
             int select = input.askInt("Select: ",6);
             UserAction action = actions.get(select);
             run = action.execute(input, tracker);
         }
     }
-/*
-    private void showMenu(UserAction[] actions) {
-        System.out.println("Menu.");
-        for (int index = 0; index < actions.length; index++) {
-            System.out.println(index + ". " + actions[index].name());
-        }
-    }*/
 
     public static void main(String[] args) {
         Input input = new ConsoleInput();
