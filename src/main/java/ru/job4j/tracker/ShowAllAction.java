@@ -7,8 +7,8 @@ public class ShowAllAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        for (Item item : tracker.findAll()) {
+    public boolean execute(Input input, Store memTracker) {
+        for (Item item : memTracker.findAll()) {
             System.out.println(item);
         }
             return true;

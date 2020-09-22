@@ -1,10 +1,7 @@
 package ru.job4j.tracker.test;
 
 import org.junit.Test;
-import ru.job4j.tracker.Item;
-import ru.job4j.tracker.ShowAllAction;
-import ru.job4j.tracker.StubInput;
-import ru.job4j.tracker.Tracker;
+import ru.job4j.tracker.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -20,11 +17,11 @@ public class ShowAllActionTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
-        Tracker tracker = new Tracker();
+        Store memTracker = new SqlTracker();
         Item item = new Item("fix bug");
-        tracker.add(item);
+        memTracker.add(item);
         ShowAllAction act = new ShowAllAction();
-        act.execute(new StubInput(new String[] {}), tracker);
+        act.execute(new StubInput(new String[] {}), memTracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add(item.toString())
                 .toString();

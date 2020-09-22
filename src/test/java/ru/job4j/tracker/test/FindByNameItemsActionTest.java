@@ -17,11 +17,11 @@ public class FindByNameItemsActionTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
-        Tracker tracker = new Tracker();
+        Store memTracker = new SqlTracker();
         Item item = new Item("fix bug");
-        tracker.add(item);
+        memTracker.add(item);
         FindByNameItemsAction act = new FindByNameItemsAction();
-        act.execute(new StubInput(new String[] {"fix bug"}), tracker);
+        act.execute(new StubInput(new String[] {"fix bug"}), memTracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add(item.toString())
                 .toString();

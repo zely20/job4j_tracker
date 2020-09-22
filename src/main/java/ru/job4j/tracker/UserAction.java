@@ -4,5 +4,5 @@ public interface UserAction {
 
     public String name();
 
-    public boolean execute(Input input, Tracker tracker);
+    public boolean execute(Input input, Store memTracker);
 }
