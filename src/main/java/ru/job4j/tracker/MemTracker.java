@@ -29,7 +29,7 @@ public class MemTracker {
      */
     private String generateId() {
         Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+        return String.valueOf(rm.nextInt() + System.currentTimeMillis());
     }
 
     /**

@@ -20,23 +20,20 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-        try (Store tracker = new SqlTracker()) {
-            tracker.init();
-            UserAction[] actions = {
-                    new CreateAction()
-            };
-            new StartUI().init(validate, tracker, Arrays.asList(actions));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-       /*// List<UserAction> actions = new ArrayList<>();
+
+        List<UserAction> actions = new ArrayList<>();
         actions.add(new CreateAction());
         actions.add(new ShowAllAction());
         actions.add(new EditItemAction());
         actions.add(new DeleteItemAction());
         actions.add(new FindByIdItemAction());
         actions.add(new FindByNameItemsAction());
-*/
-        //new StartUI().init(validate, memTracker, actions);
+
+        try (Store tracker = new SqlTracker()) {
+            tracker.init();
+            new StartUI().init(validate, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

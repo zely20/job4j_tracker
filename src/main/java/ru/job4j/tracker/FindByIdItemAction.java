@@ -13,6 +13,7 @@ public class FindByIdItemAction implements UserAction {
         Item item = memTracker.findById(id);
         if (item != null) {
             System.out.println("Item found");
+            System.out.println(item);
         } else {
             System.out.println("Item was not find");
         }

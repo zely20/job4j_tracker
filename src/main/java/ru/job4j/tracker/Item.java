@@ -13,6 +13,10 @@ public class Item {
         this.name = name;
     }
 
+    public Item() {
+
+    }
+
     public String getId() {
         return id;
     }
