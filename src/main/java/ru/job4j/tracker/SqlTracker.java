@@ -41,13 +41,15 @@ public class SqlTracker implements Store {
     @Override
     public Item add(Item item) {
         try {
-            PreparedStatement pr = connection.prepareStatement(ADD_ITEM, Statement.RETURN_GENERATED_KEYS);
-            pr.setString(1, item.getName());
-            pr.executeUpdate();
-            ResultSet rs = pr.getGeneratedKeys();
-            if (rs.next()) {
-                int last_inserted_id = rs.getInt(1);
-                item.setId(Integer.toString(last_inserted_id));
+            try (PreparedStatement pr = connection.prepareStatement(ADD_ITEM, Statement.RETURN_GENERATED_KEYS)) {
+                pr.setString(1, item.getName());
+                pr.executeUpdate();
+                try (ResultSet rs = pr.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int last_inserted_id = rs.getInt(1);
+                        item.setId(Integer.toString(last_inserted_id));
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,11 +62,15 @@ public class SqlTracker implements Store {
     @Override
     public boolean replace(String id, Item item) {
         try {
-            PreparedStatement pr = connection.prepareStatement(REPLACE_ITEM);
-            pr.setString(1, item.getName());
-            pr.setInt(2, Integer.parseInt(id));
-            pr.executeUpdate();
-            ResultSet rs = pr.getGeneratedKeys();
+            try (PreparedStatement pr = connection.prepareStatement(REPLACE_ITEM)) {
+                pr.setString(1, item.getName());
+                pr.setInt(2, Integer.parseInt(id));
+                if (pr.executeUpdate() == 0) {
+                    return false;
+                }
+                try (ResultSet rs = pr.getGeneratedKeys()) {
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -76,10 +82,15 @@ public class SqlTracker implements Store {
     @Override
     public boolean delete(String id) {
         try {
-            PreparedStatement pr = connection.prepareStatement(DELETE_ITEM);
-            pr.setInt(1, Integer.parseInt(id));
-            pr.executeUpdate();
-            ResultSet rs = pr.getGeneratedKeys();
+            try (PreparedStatement pr = connection.prepareStatement(DELETE_ITEM)) {
+                pr.setInt(1, Integer.parseInt(id));
+                if (pr.executeUpdate() == 0) {
+                    return false;
+                }
+                try (ResultSet rs = pr.getGeneratedKeys()) {
+                    return false;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -92,10 +103,11 @@ public class SqlTracker implements Store {
     public List<Item> findAll() {
         result = new LinkedList<>();
         try {
-            PreparedStatement pr = connection.prepareStatement(FIND_ALL_ITEM);
-            ResultSet resultSet = pr.executeQuery();
-            while (resultSet.next()) {
-                result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+            try (PreparedStatement pr = connection.prepareStatement(FIND_ALL_ITEM)) {
+                ResultSet resultSet = pr.executeQuery();
+                while (resultSet.next()) {
+                    result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,11 +121,12 @@ public class SqlTracker implements Store {
     public List<Item> findByName(String key) {
         result = new LinkedList<>();
         try {
-            PreparedStatement pr = connection.prepareStatement(FIND_BY_NAME_ITEM);
-            pr.setString(1, key);
-            ResultSet resultSet = pr.executeQuery();
-            while (resultSet.next()) {
-                result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+            try (PreparedStatement pr = connection.prepareStatement(FIND_BY_NAME_ITEM)) {
+                pr.setString(1, key);
+                ResultSet resultSet = pr.executeQuery();
+                while (resultSet.next()) {
+                    result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -127,11 +140,12 @@ public class SqlTracker implements Store {
     public Item findById(String id) {
         Item result = null;
         try {
-            PreparedStatement pr = connection.prepareStatement(FIND_BY_ID_ITEM);
-            pr.setInt(1, Integer.parseInt(id));
-            ResultSet resultSet = pr.executeQuery();
-            while (resultSet.next()) {
-                result = new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2));
+            try (PreparedStatement pr = connection.prepareStatement(FIND_BY_ID_ITEM)) {
+                pr.setInt(1, Integer.parseInt(id));
+                ResultSet resultSet = pr.executeQuery();
+                while (resultSet.next()) {
+                    result = new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
