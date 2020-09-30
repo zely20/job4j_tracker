@@ -40,7 +40,6 @@ public class SqlTracker implements Store {
 
     @Override
     public Item add(Item item) {
-
             try (PreparedStatement pr = connection.prepareStatement(ADD_ITEM, Statement.RETURN_GENERATED_KEYS)) {
                 pr.setString(1, item.getName());
                 pr.executeUpdate();
@@ -49,7 +48,6 @@ public class SqlTracker implements Store {
                         int last_inserted_id = rs.getInt(1);
                         item.setId(Integer.toString(last_inserted_id));
                     }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();

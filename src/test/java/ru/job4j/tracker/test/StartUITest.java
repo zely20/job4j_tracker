@@ -2,6 +2,7 @@ package ru.job4j.tracker.test;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.tracker.*;
 
@@ -14,6 +15,7 @@ import java.util.StringJoiner;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 public class StartUITest {
 
     private final PrintStream def = System.out;
