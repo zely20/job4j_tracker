@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-public class SqlTracker implements Store {
+public class SqlTracker implements Store, AutoCloseable {
     private static final String ADD_ITEM = "INSERT INTO items (name) VALUES (?);";
     private static final String REPLACE_ITEM = "UPDATE items SET name = ? WHERE id = ?;";
     private static final String DELETE_ITEM = "DELETE FROM items WHERE id = ?;";
@@ -15,6 +15,13 @@ public class SqlTracker implements Store {
     private static final String FIND_BY_ID_ITEM = "SELECT * FROM items WHERE id = ?";
     private Connection connection;
     private List<Item> result;
+
+    public SqlTracker(){
+    }
+
+    public SqlTracker(Connection connection) {
+        this.connection = connection;
+    }
 
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
