@@ -46,9 +46,11 @@ public class SqlTrackerTest {
     @Test
     public void deleteItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.add(new Item("1", "pen"));
-            tracker.add(new Item("2", "pen"));
-            if(!tracker.delete("1")){
+            Item item1 = new Item("1", "pen");
+            Item item2 = new Item("2", "pen");
+            tracker.add(item1);
+            tracker.add(item2);
+            if(!tracker.delete(item2.getId())){
                 System.out.println("false");
             };
             assertThat(tracker.findByName("pen").size(), is(1));
