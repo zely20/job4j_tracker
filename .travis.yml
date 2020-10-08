@@ -18,3 +18,7 @@ notifications:
       -zely1984@gmail.com
     on_success: never # default: change
     on_failure: always # defa,ult: always
+
+env:
+  global:
+    - CODECOV_TOKEN="3fa9ef58-e3ff-4e04-8311-8b5a56ca2385"
