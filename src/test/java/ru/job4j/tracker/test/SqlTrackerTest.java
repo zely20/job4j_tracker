@@ -13,7 +13,6 @@ import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -52,9 +51,10 @@ public class SqlTrackerTest {
             Item item2 = new Item("2", "pen");
             tracker.add(item1);
             tracker.add(item2);
-            if(!tracker.delete(item2.getId())){
+            if (!tracker.delete(item2.getId())) {
                 System.out.println("false");
-            };
+            }
+            ;
             assertThat(tracker.findByName("pen").size(), is(1));
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +66,51 @@ public class SqlTrackerTest {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             Item item1 = new Item("1", "pen");
             Item item2 = new Item("2", "book");
+            tracker.add(item1);
             assertTrue(tracker.replace(item1.getId(), item2));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findAllItem() throws SQLException {
+        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
+            tracker.add(new Item("1", "desc"));
+            tracker.add(new Item("2", "desc"));
+            tracker.add(new Item("3", "desc"));
+            tracker.add(new Item("4", "desc"));
+            assertThat(tracker.findAll().size(), is(4));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findByNameItem() throws SQLException {
+        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
+            Item item1 = new Item("1", "book");
+            Item item2 = new Item("2", "book");
+            Item item3 = new Item("3", "book");
+            tracker.add(item1);
+            tracker.add(item2);
+            tracker.add(item3);
+            assertThat(tracker.findByName("book").size(), is(3));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findByIdItem() throws SQLException {
+        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
+            Item item1 = new Item("1", "book");
+            Item item2 = new Item("2", "pen");
+            Item item3 = new Item("3", "pencil");
+            tracker.add(item1);
+            tracker.add(item2);
+            tracker.add(item3);
+            assertThat(tracker.findById(item2.getId()), is(item2));
         } catch (Exception e) {
             e.printStackTrace();
         }
