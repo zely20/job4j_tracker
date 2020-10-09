@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class SqlTrackerTest {
@@ -54,6 +56,17 @@ public class SqlTrackerTest {
                 System.out.println("false");
             };
             assertThat(tracker.findByName("pen").size(), is(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void replaceItem() throws SQLException {
+        try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
+            Item item1 = new Item("1", "pen");
+            Item item2 = new Item("2", "book");
+            assertTrue(tracker.replace(item1.getId(), item2));
         } catch (Exception e) {
             e.printStackTrace();
         }
