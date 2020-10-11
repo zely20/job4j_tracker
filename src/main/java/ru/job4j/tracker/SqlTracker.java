@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class SqlTracker implements Store, AutoCloseable {
-    private static final String ADD_ITEM = "INSERT INTO items (name) VALUES (?);";
+    private static final String ADD_ITEM = "INSERT INTO items ( name) VALUES (?);";
     private static final String REPLACE_ITEM = "UPDATE items SET name = ? WHERE id = ?;";
     private static final String DELETE_ITEM = "DELETE FROM items WHERE id = ?;";
     private static final String FIND_ALL_ITEM = "SELECT * FROM items";

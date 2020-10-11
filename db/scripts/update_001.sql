@@ -1,4 +1,4 @@
 create table items (
-   id varchar,
+   id serial,
    name varchar(2000)
 );
