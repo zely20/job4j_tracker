@@ -1,4 +1,4 @@
 create table items (
-   id varchar not null,
+   id varchar,
    name varchar(2000)
 );
