@@ -66,16 +66,12 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public boolean replace(String id, Item item) {
-
             try (PreparedStatement pr = connection.prepareStatement(REPLACE_ITEM)) {
                 pr.setString(1, item.getName());
                 pr.setInt(2, Integer.parseInt(id));
                 if (pr.executeUpdate() == 0) {
                     return false;
                 }
-                try (ResultSet rs = pr.getGeneratedKeys()) {
-                }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
