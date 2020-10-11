@@ -47,8 +47,8 @@ public class SqlTrackerTest {
     @Test
     public void deleteItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item1 = new Item("1", "pen");
-            Item item2 = new Item("2", "pen");
+            Item item1 = new Item("n", "pen");
+            Item item2 = new Item("b", "pen");
             tracker.add(item1);
             tracker.add(item2);
             if (!tracker.delete(item2.getId())) {
@@ -64,8 +64,8 @@ public class SqlTrackerTest {
     @Test
     public void replaceItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item1 = new Item("1", "pen");
-            Item item2 = new Item("2", "book");
+            Item item1 = new Item("a", "pen");
+            Item item2 = new Item("b", "book");
             tracker.add(item1);
             assertTrue(tracker.replace(item1.getId(), item2));
         } catch (Exception e) {
@@ -76,10 +76,10 @@ public class SqlTrackerTest {
     @Test
     public void findAllItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.add(new Item("1", "desc"));
-            tracker.add(new Item("2", "desc"));
-            tracker.add(new Item("3", "desc"));
-            tracker.add(new Item("4", "desc"));
+            tracker.add(new Item("c", "desc"));
+            tracker.add(new Item("d", "desc"));
+            tracker.add(new Item("f", "desc"));
+            tracker.add(new Item("e", "desc"));
             assertThat(tracker.findAll().size(), is(4));
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,9 +89,9 @@ public class SqlTrackerTest {
     @Test
     public void findByNameItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item1 = new Item("1", "book");
-            Item item2 = new Item("2", "book");
-            Item item3 = new Item("3", "book");
+            Item item1 = new Item("a", "book");
+            Item item2 = new Item("b", "book");
+            Item item3 = new Item("c", "book");
             tracker.add(item1);
             tracker.add(item2);
             tracker.add(item3);
@@ -104,9 +104,9 @@ public class SqlTrackerTest {
     @Test
     public void findByIdItem() throws SQLException {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            Item item1 = new Item("1", "book");
-            Item item2 = new Item("2", "pen");
-            Item item3 = new Item("3", "pencil");
+            Item item1 = new Item("a", "book");
+            Item item2 = new Item("b", "pen");
+            Item item3 = new Item("c", "pencil");
             tracker.add(item1);
             tracker.add(item2);
             tracker.add(item3);
