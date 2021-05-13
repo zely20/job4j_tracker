@@ -1,7 +1,6 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StartUI {
@@ -20,14 +19,14 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-
+        Output output = new ConsoleOutput();
         List<UserAction> actions = new ArrayList<>();
         actions.add(new CreateAction());
         actions.add(new ShowAllAction());
-        actions.add(new EditItemAction());
-        actions.add(new DeleteItemAction());
-        actions.add(new FindByIdItemAction());
-        actions.add(new FindByNameItemsAction());
+        actions.add(new EditItemAction(output));
+        actions.add(new DeleteItemAction(output));
+        actions.add(new FindByIdItemAction(output));
+        actions.add(new FindByNameItemsAction(output));
 
         try (Store tracker = new SqlTracker()) {
             tracker.init();

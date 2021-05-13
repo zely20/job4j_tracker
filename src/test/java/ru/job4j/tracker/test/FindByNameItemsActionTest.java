@@ -16,13 +16,14 @@ public class FindByNameItemsActionTest {
 
     @Test
     public void whenCheckOutput() {
+        Output output = new ConsoleOutput();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
         Store memTracker = new SqlTracker();
         Item item = new Item("fix bug");
         memTracker.add(item);
-        FindByNameItemsAction act = new FindByNameItemsAction();
+        FindByNameItemsAction act = new FindByNameItemsAction(output);
         act.execute(new StubInput(new String[] {"fix bug"}), memTracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add(item.toString())

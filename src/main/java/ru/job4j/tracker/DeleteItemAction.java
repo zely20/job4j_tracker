@@ -1,6 +1,13 @@
 package ru.job4j.tracker;
 
 public class DeleteItemAction implements UserAction {
+
+    private final Output output;
+
+    public DeleteItemAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "=== Delete item ===";
@@ -10,9 +17,9 @@ public class DeleteItemAction implements UserAction {
     public boolean execute(Input input, Store memTracker) {
         String id = input.askStr("For delete item please enter ID ");
         if (memTracker.delete(id)) {
-            System.out.println("Item deleted");
+            output.println("Item deleted");
         } else {
-            System.out.println("Item was not delete");
+            output.println("Item was not delete");
         }
         return  true;
     }

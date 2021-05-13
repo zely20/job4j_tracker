@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MemTracker {
+public class MemTracker implements Store {
     /**
      * Массив для хранения заявок.
      */
     private final List<Item> items = new ArrayList<>();
+    private int id = 0;
+    @Override
+    public void init() {
+
+    }
 
     /**
      * Метод добавления заявки в хранилище
@@ -21,6 +26,11 @@ public class MemTracker {
         return item;
     }
 
+    @Override
+    public boolean replace(String id, Item item) {
+        return false;
+    }
+
     /**
      * Метод генерирует уникальный ключ для заявки.
      * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
@@ -28,8 +38,7 @@ public class MemTracker {
      * @return Уникальный ключ.
      */
     private String generateId() {
-        Random rm = new Random();
-        return String.valueOf(rm.nextInt() + System.currentTimeMillis());
+        return String.valueOf(++id);
     }
 
     /**
@@ -89,5 +98,10 @@ public class MemTracker {
             }
         }
         return -1;
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }

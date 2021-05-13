@@ -1,6 +1,13 @@
 package ru.job4j.tracker;
 
 public class FindByIdItemAction implements UserAction {
+
+    private final Output output;
+
+    public FindByIdItemAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "=== Find items by ID ====";
@@ -12,10 +19,10 @@ public class FindByIdItemAction implements UserAction {
         String id = input.askStr("Please enter id");
         Item item = memTracker.findById(id);
         if (item != null) {
-            System.out.println("Item found");
-            System.out.println(item);
+            output.println("Item found");
+            output.println(item);
         } else {
-            System.out.println("Item was not find");
+            output.println("Item was not find");
         }
         return true;
     }

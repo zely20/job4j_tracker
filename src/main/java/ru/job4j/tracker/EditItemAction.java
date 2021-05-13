@@ -1,6 +1,13 @@
 package ru.job4j.tracker;
 
 public class EditItemAction implements UserAction {
+
+    private final Output output;
+
+    public EditItemAction(Output output) {
+        this.output = output;
+    }
+
     @Override
     public String name() {
         return "=== edit item ===";
@@ -12,9 +19,9 @@ public class EditItemAction implements UserAction {
         String name = input.askStr("Enter name: ");
         Item item = new Item(id, name);
         if (memTracker.replace(id,item)) {
-            System.out.println("Item replaced");
+            output.println("Item replaced");
         } else {
-            System.out.println("Item was not replace");
+            output.println("Item was not replace");
         }
         return true;
     }
