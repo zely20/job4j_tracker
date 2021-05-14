@@ -26,7 +26,7 @@ public class MackitoTest {
         assertThat(memTracker.findAll().get(0).getName(), is("test"));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void deleteActionTest() {
         Output out = new ConsoleOutput();
         Store memTracker = new MemTracker();
@@ -37,7 +37,6 @@ public class MackitoTest {
         when(input.askStr(any(String.class))).thenReturn(id);
         deleteItemAction.execute(input, memTracker);
         assertThat(out.toString(), is("Item deleted"));
-        memTracker.findAll().get(0);
     }
 
     @Test
