@@ -16,11 +16,10 @@ public class MackitoTest {
 
         Output out = new ConsoleOutput();
         Store memTracker = new MemTracker();
-        memTracker.add(new Item("test"));
-        String replaceId = "0";
+        Item item = memTracker.add(new Item("test"));
         EditItemAction editItemAction = new EditItemAction(out);
         Input input = mock(Input.class);
-        when(input.askStr(any(String.class))).thenReturn(replaceId);
+        when(input.askStr(any(String.class))).thenReturn(item.getId());
         editItemAction.execute(input, memTracker);
         assertThat(out.toString(), is("Item was not replace"));
         assertThat(memTracker.findAll().get(0).getName(), is("test"));
@@ -30,11 +29,10 @@ public class MackitoTest {
     public void deleteActionTest() {
         Output out = new ConsoleOutput();
         Store memTracker = new MemTracker();
-        memTracker.add(new Item("test"));
-        String id = "1";
+        Item item = memTracker.add(new Item("test"));
         DeleteItemAction deleteItemAction = new DeleteItemAction(out);
         Input input = mock(Input.class);
-        when(input.askStr(any(String.class))).thenReturn(id);
+        when(input.askStr(any(String.class))).thenReturn(item.getId());
         deleteItemAction.execute(input, memTracker);
         assertThat(out.toString(), is("Item deleted"));
     }
@@ -44,11 +42,10 @@ public class MackitoTest {
         String ln = System.lineSeparator();
         Output out = new ConsoleOutput();
         Store memTracker = new MemTracker();
-        memTracker.add(new Item("test"));
-        String id = "1";
+        Item item = memTracker.add(new Item("test"));
         FindByIdItemAction findByIdItemAction = new FindByIdItemAction(out);
         Input input = mock(Input.class);
-        when(input.askStr(any(String.class))).thenReturn(id);
+        when(input.askStr(any(String.class))).thenReturn(item.getId());
         findByIdItemAction.execute(input, memTracker);
         assertThat(out.toString(), is("Item foundItem id is " + "1, " + "Item name is test"));
     }
@@ -58,11 +55,10 @@ public class MackitoTest {
         String ln = System.lineSeparator();
         Output out = new ConsoleOutput();
         Store memTracker = new MemTracker();
-        memTracker.add(new Item("test"));
-        String name = "test";
+        Item item = memTracker.add(new Item("test"));
         FindByNameItemsAction findByIdItemAction = new FindByNameItemsAction(out);
         Input input = mock(Input.class);
-        when(input.askStr(any(String.class))).thenReturn(name);
+        when(input.askStr(any(String.class))).thenReturn(item.getName());
         findByIdItemAction.execute(input, memTracker);
         assertThat(out.toString(), is("Item id is 1, Item name is test"));
     }
