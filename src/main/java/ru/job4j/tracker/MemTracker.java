@@ -27,7 +27,7 @@ public class MemTracker implements Store {
     }
 
     @Override
-    public boolean replace(String id, Item item) {
+    public boolean replace(Integer id, Item item) {
         return false;
     }
 
@@ -37,8 +37,8 @@ public class MemTracker implements Store {
      *
      * @return Уникальный ключ.
      */
-    private String generateId() {
-        return String.valueOf(++id);
+    private Integer generateId() {
+        return ++id;
     }
 
     /**
@@ -65,7 +65,7 @@ public class MemTracker implements Store {
         return itemsByName;
     }
 
-    public Item findById(String id) {
+    public Item findById(Integer id) {
         int i = indexOf(id);
         if (i >= 0) {
             return items.get(i);
@@ -82,7 +82,7 @@ public class MemTracker implements Store {
         return false;
     }
 
-    public boolean delete(String id) {
+    public boolean delete(Integer id) {
         int i = indexOf(id);
         if (i >= 0) {
             items.remove(i);
@@ -91,7 +91,7 @@ public class MemTracker implements Store {
         return false;
     }
 
-    public int indexOf(String id) {
+    public int indexOf(Integer id) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getId().equals(id)) {
                 return i;

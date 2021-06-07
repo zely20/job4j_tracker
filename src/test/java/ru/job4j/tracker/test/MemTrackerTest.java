@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 @Ignore
 public class MemTrackerTest {
+
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
         MemTracker memTracker = new MemTracker();
@@ -98,7 +99,7 @@ public class MemTrackerTest {
         memTracker.add(item2);
         memTracker.add(item3);
         Item item5 = null;
-        assertThat(memTracker.findById("68742874894"), is(item5));
+        assertThat(memTracker.findById(687428748), is(item5));
     }
 
   /*  @Test
@@ -119,7 +120,7 @@ public class MemTrackerTest {
         Item bug1 = new Item("Bug1");
         memTracker.add(bug);
         memTracker.add(bug1);
-        String id = bug.getId();
+        Integer id = bug.getId();
         memTracker.delete(id);
         assertThat(memTracker.findById(id), is(nullValue()));
     }

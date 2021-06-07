@@ -53,7 +53,7 @@ public class SqlTracker implements Store, AutoCloseable {
                 try (ResultSet rs = pr.getGeneratedKeys()) {
                     if (rs.next()) {
                         int last_inserted_id = rs.getInt(1);
-                        item.setId(Integer.toString(last_inserted_id));
+                        item.setId(last_inserted_id);
                     }
             }
         } catch (SQLException e) {
@@ -65,10 +65,10 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean replace(String id, Item item) {
+    public boolean replace(Integer id, Item item) {
             try (PreparedStatement pr = connection.prepareStatement(REPLACE_ITEM)) {
                 pr.setString(1, item.getName());
-                pr.setInt(2, Integer.parseInt(id));
+                pr.setInt(2, id);
                 if (pr.executeUpdate() == 0) {
                     return false;
                 }
@@ -81,9 +81,9 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Integer id) {
             try (PreparedStatement pr = connection.prepareStatement(DELETE_ITEM)) {
-                pr.setInt(1, Integer.parseInt(id));
+                pr.setInt(1,id);
                 if (pr.executeUpdate() == 0) {
                     return false;
                 }
@@ -102,7 +102,7 @@ public class SqlTracker implements Store, AutoCloseable {
             try (PreparedStatement pr = connection.prepareStatement(FIND_ALL_ITEM)) {
                 ResultSet resultSet = pr.executeQuery();
                 while (resultSet.next()) {
-                    result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+                    result.add(new Item(resultSet.getInt(1), resultSet.getString(2)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +119,7 @@ public class SqlTracker implements Store, AutoCloseable {
                 pr.setString(1, key);
                 ResultSet resultSet = pr.executeQuery();
                 while (resultSet.next()) {
-                    result.add(new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2)));
+                    result.add(new Item(resultSet.getInt(1), resultSet.getString(2)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,13 +130,13 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public Item findById(String id) {
+    public Item findById(Integer id) {
         Item result = null;
             try (PreparedStatement pr = connection.prepareStatement(FIND_BY_ID_ITEM)) {
-                pr.setInt(1, Integer.parseInt(id));
+                pr.setInt(1, id);
                 ResultSet resultSet = pr.executeQuery();
                 while (resultSet.next()) {
-                    result = new Item(Integer.toString(resultSet.getInt(1)), resultSet.getString(2));
+                    result = new Item(resultSet.getInt(1), resultSet.getString(2));
             }
         } catch (SQLException e) {
             e.printStackTrace();
