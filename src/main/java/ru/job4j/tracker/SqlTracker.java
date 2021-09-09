@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.react.Observe;
+
 import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
@@ -98,11 +100,29 @@ public class SqlTracker implements Store, AutoCloseable {
     @Override
     public List<Item> findAll() {
         result = new LinkedList<>();
+        try (PreparedStatement pr = connection.prepareStatement(FIND_ALL_ITEM)) {
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()) {
+                result.add(new Item(resultSet.getInt(1), resultSet.getString(2)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
+
+    @Override
+    public List<Item> findReactAll(Observe<Item> observe) {
+        result = new LinkedList<>();
             try (PreparedStatement pr = connection.prepareStatement(FIND_ALL_ITEM)) {
                 ResultSet resultSet = pr.executeQuery();
                 while (resultSet.next()) {
-                    result.add(new Item(resultSet.getInt(1), resultSet.getString(2)));
+                    Item item = new Item(resultSet.getInt(1), resultSet.getString(2));
+                    observe.receive(item);
+                    result.add(item);
             }
         } catch (SQLException e) {
             e.printStackTrace();
