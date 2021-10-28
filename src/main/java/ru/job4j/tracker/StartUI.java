@@ -28,7 +28,7 @@ public class StartUI {
         actions.add(new FindByIdItemAction(output));
         actions.add(new FindByNameItemsAction(output));
 
-        try (Store tracker = new SqlTracker()) {
+        try (Store tracker = new MemTracker()) {
             tracker.init();
             new StartUI().init(validate, tracker, actions);
         } catch (Exception e) {

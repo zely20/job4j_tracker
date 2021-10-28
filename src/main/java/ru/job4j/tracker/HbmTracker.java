@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
+import ru.job4j.tracker.react.Observe;
 
 import java.util.List;
 
@@ -82,6 +83,11 @@ public class HbmTracker implements Store, AutoCloseable {
         session.getTransaction().commit();
         session.close();
         return result;
+    }
+
+    @Override
+    public List<Item> findReactAll(Observe<Item> observe) {
+        return null;
     }
 
     @Override

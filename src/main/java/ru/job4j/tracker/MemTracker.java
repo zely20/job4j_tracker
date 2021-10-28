@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.react.Observe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -70,6 +72,11 @@ public class MemTracker implements Store {
         if (i >= 0) {
             return items.get(i);
         }
+        return null;
+    }
+
+    @Override
+    public List<Item> findReactAll(Observe<Item> observe) {
         return null;
     }
 
